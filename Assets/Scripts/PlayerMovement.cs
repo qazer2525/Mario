@@ -96,11 +96,11 @@ public class PlayerMovement : MonoBehaviour
                 // check if it doesn't go beyond maxSpeed
                 if (onGroundState == false && marioBody.linearVelocityX > 0 && Input.GetKey(KeyCode.A))
                 {
-                    marioBody.AddForce(movement * speed * 2);
+                    marioBody.AddForce(movement * speed * 4);
                 }
                 else if (onGroundState == false && marioBody.linearVelocityX < 0 && Input.GetKey(KeyCode.D))
                 {
-                    marioBody.AddForce(movement * speed * 2);
+                    marioBody.AddForce(movement * speed * 4);
                 }
                 else if (marioBody.linearVelocity.magnitude < maxSpeed + marioBody.linearVelocityY)
                     marioBody.AddForce(movement * speed);
