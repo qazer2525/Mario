@@ -66,11 +66,11 @@ public class PlayerMovement : MonoBehaviour
             // check if it doesn't go beyond maxSpeed
             if (onGroundState == false && marioBody.linearVelocityX > 0 && Input.GetKey(KeyCode.A))
             {
-                marioBody.AddForce(movement * speed * 2);
+                marioBody.AddForce(movement * speed * 4);
             }
             else if (onGroundState == false && marioBody.linearVelocityX < 0 && Input.GetKey(KeyCode.D))
             {
-                marioBody.AddForce(movement * speed * 2);
+                marioBody.AddForce(movement * speed * 4);
             }
             else if (marioBody.linearVelocity.magnitude < maxSpeed)
                 marioBody.AddForce(movement * speed);
@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
     public void ResetGame()
     {
         // reset position
-        marioBody.transform.position = new Vector3(-7.95f, -2.38f, 0.0f);
+        marioBody.transform.position = new Vector3(0.11f, -2.38f, 0.0f);
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
