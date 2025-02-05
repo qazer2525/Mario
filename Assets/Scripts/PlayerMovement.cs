@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource marioAudio;
 
     public Transform gameCamera;
+
     // state
     [System.NonSerialized]
     public bool alive = true;
@@ -75,7 +76,8 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) & !onGroundState)
+        if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) && !onGroundState)
+
         {
             onGroundState = true;
             // update animator state
@@ -125,13 +127,15 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+
+        if (other.gameObject.CompareTag("Enemy") && alive)
         {
             //Debug.Log("Collided with goomba!" + jumpOverGoomba.score.ToString());
             // play death animation
             marioAnimator.Play("mario-die");
             marioAudio.PlayOneShot(marioDeath);
             alive = false;
+
         }
     }
 
@@ -147,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
     public void ResetGame()
     {
         // reset position
-        marioBody.transform.position = new Vector3(-8f, -2.27f, 0.0f);
+        marioBody.transform.position = new Vector3(-8f, -1.9f, 0.0f);
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
@@ -168,7 +172,20 @@ public class PlayerMovement : MonoBehaviour
         // reset animation
         marioAnimator.SetTrigger("gameRestart");
         alive = true;
-        gameCamera.position = new Vector3(-0.6f, 0.1f, -10);
+        GameObject[] QuestionBlocks = GameObject.FindGameObjectsWithTag("QuestionBlock");
+        foreach (GameObject eachChild in QuestionBlocks)
+        {
+            if (eachChild.GetComponent<QuestionBlock>() != null)
+            {
+                eachChild.GetComponent<QuestionBlock>().RestartButtonCallback(0);
+            }
+            else if (eachChild.GetComponent<CoinBlock>() != null)
+            {
+                eachChild.GetComponent<CoinBlock>().RestartButtonCallback(0);
+            }
+
+        }
+
     }
 
     void PlayDeathImpulse()
