@@ -9,6 +9,7 @@ TagManager:
   - Score
   - Obstacles
   - QuestionBlock
+  - Manager
   layers:
   - Default
   - TransparentFX

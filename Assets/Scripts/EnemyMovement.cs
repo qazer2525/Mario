@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
@@ -14,9 +15,16 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody2D enemyBody;
     public Vector3 startPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
+    private Animator animator;
+
+    private GameManager gameManager;
+
+    private bool alive = true;
     void Start()
     {
         enemyBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         // get the starting position
         originalX = transform.position.x;
         ComputeVelocity();
@@ -32,20 +40,46 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        if (Mathf.Abs(enemyBody.position.x - originalX) < maxOffset)
-        {// move goomba
-            Movegoomba();
-        }
-        else
+        if (alive)
         {
-            // change direction
-            moveRight *= -1;
-            ComputeVelocity();
-            Movegoomba();
+            if (Mathf.Abs(enemyBody.position.x - originalX) < maxOffset)
+            {// move goomba
+                Movegoomba();
+            }
+            else
+            {
+                // change direction
+                moveRight *= -1;
+                ComputeVelocity();
+                Movegoomba();
+            }
         }
+
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        
+
     }
+
+    public void EnemyDeath()
+    {
+        alive = false;
+        animator.SetBool("alive", alive);
+        gameManager.IncreaseScore(1);
+
+
+    }
+    public void GameRestart()
+    {
+        transform.localPosition = startPosition;
+        originalX = transform.position.x;
+        moveRight = -1;
+        ComputeVelocity();
+        alive = true;
+        animator.SetBool("alive", alive);
+        animator.SetTrigger("GameRestart");
+
+
+    }
+
 }

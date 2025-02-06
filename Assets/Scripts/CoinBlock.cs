@@ -21,21 +21,14 @@ public class CoinBlock : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        float mario_max_y = col.collider.bounds.center.y - col.collider.bounds.extents.y;
-        float block_min_y = col.otherCollider.bounds.center.y - col.otherCollider.bounds.extents.y;
-
-        float mario_min_x = col.collider.bounds.center.x - col.collider.bounds.extents.x;
-        float mario_max_x = col.collider.bounds.center.x + col.collider.bounds.extents.x;
-        float block_min_x = col.otherCollider.bounds.center.x - col.otherCollider.bounds.extents.x;
-        float block_max_x = col.otherCollider.bounds.center.x + col.otherCollider.bounds.extents.x;
-        if (col.otherCollider.GetType() == typeof(BoxCollider2D) && collected == false && mario_max_y <= block_min_y && ((block_min_x < mario_max_x && block_min_x > mario_min_x) || (block_max_x > mario_min_x && block_max_x < mario_max_x)))
+        if (collected == false)
         {
             collected = true;
             coin.GetComponent<Animator>().SetTrigger("OnCollision");
             coin.GetComponent<AudioSource>().Play();
         }
     }
-    public void RestartButtonCallback(int input)
+    public void GameRestart()
     {
         collected = false;
     }
