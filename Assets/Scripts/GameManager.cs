@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     // events
     public UnityEvent gameStart;
@@ -11,12 +12,16 @@ public class GameManager : MonoBehaviour
     public UnityEvent<int> scoreChange;
     public UnityEvent<int> gameOver;
 
-    private int score = 0;
+    public IntVariable gameScore;
 
     void Start()
     {
+        // Set to be 30 FPS
+        Application.targetFrameRate = 30;
         gameStart.Invoke();
         Time.timeScale = 1.0f;
+        // subscribe to scene manager scene change
+        SceneManager.activeSceneChanged += SceneSetup;
     }
 
     // Update is called once per frame
@@ -28,17 +33,16 @@ public class GameManager : MonoBehaviour
     public void GameRestart()
     {
         // reset score
-        score = 0;
-        SetScore(score);
+        gameScore.Value = 0;
+        SetScore(gameScore.Value);
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
     }
 
     public void IncreaseScore(int increment)
     {
-        score += increment;
-        Debug.Log(score);
-        SetScore(score);
+        gameScore.ApplyChange(increment);
+        SetScore(gameScore.Value);
     }
 
     public void SetScore(int score)
@@ -50,6 +54,11 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         Time.timeScale = 0.0f;
-        gameOver.Invoke(score);
+        gameOver.Invoke(gameScore.Value);
+    }
+    public void SceneSetup(Scene current, Scene next)
+    {
+        gameStart.Invoke();
+        SetScore(gameScore.Value);
     }
 }

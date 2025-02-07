@@ -6,35 +6,26 @@ using UnityEditor;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 10;
+    public GameConstants gameConstants;
+    float deathImpulse;
+    float upSpeed;
+    float maxSpeed;
+    float speed;
     private Rigidbody2D marioBody;
-    public float maxSpeed = 20;
-    public float upSpeed = 10;
     private bool onGroundState = true;
 
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
-    // Start is called before the first frame update
-    private TextMeshProUGUI scoreText;
-    public GameObject enemies;
-
-    public JumpOverGoomba jumpOverGoomba;
-
-    public GameObject gameOver;
-
-    public GameObject GameUI;
-
     // for animation
     public Animator marioAnimator;
 
     public AudioSource marioDeath;
-    public float deathImpulse = 15;
-
     public AudioSource marioAudio;
 
-    public Transform gameCamera;
+    private Transform SpawnPoint;
 
     // state
     [System.NonSerialized]
@@ -49,20 +40,23 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpedState = false;
 
     public UnityEvent<GameObject> killEnemy;
-    GameManager gameManager;
+    public void Awake()
+    {
+        // subscribe to Game Restart event
+        GameManager.instance.gameRestart.AddListener(ResetGame);
+    }
     void Start()
     {
-        // Set to be 30 FPS
-        Application.targetFrameRate = 30;
+        speed = gameConstants.speed;
+        maxSpeed = gameConstants.maxSpeed;
+        deathImpulse = gameConstants.deathImpulse;
+        upSpeed = gameConstants.upSpeed;
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
-        gameOver.SetActive(false);
-        GameUI.SetActive(true);
-        scoreText = GameUI.transform.Find("Score").GetComponent<TextMeshProUGUI>();
         // update animator state
         marioAnimator.SetBool("onGround", onGroundState);
-        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
-
+        SpawnPoint = GameObject.FindGameObjectWithTag("Spawn").transform;
+        marioBody.transform.position = SpawnPoint.position;
     }
 
     // Update is called once per frame
@@ -197,7 +191,7 @@ public class PlayerMovement : MonoBehaviour
     public void ResetGame()
     {
         // reset position
-        marioBody.transform.position = new Vector3(-8f, -1.9f, 0.0f);
+        marioBody.transform.position = SpawnPoint.position;
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
@@ -223,7 +217,16 @@ public class PlayerMovement : MonoBehaviour
         // stop time
         Time.timeScale = 0.0f;
         //update score, change UIs
-        gameManager.GameOver();
+        GameManager.instance.GameOver();
 
     }
+    // public void SetStartingPosition(Scene current, Scene next)
+    // {
+    //     if (next.name == "World 1-2")
+    //     {
+    //         // change the position accordingly in your World-1-2 case
+    //         SpawnPoint = GameObject.FindGameObjectWithTag("Spawn").transform;
+    //         this.transform.position = SpawnPoint.position;
+    //     }
+    // }
 }

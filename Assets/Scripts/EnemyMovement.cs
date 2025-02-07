@@ -13,12 +13,9 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 velocity;
 
     private Rigidbody2D enemyBody;
-    public Vector3 startPosition = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 startPosition;
 
     private Animator animator;
-
-    private GameManager gameManager;
-
     public AudioSource StompAudio;
 
     private bool alive = true;
@@ -26,8 +23,8 @@ public class EnemyMovement : MonoBehaviour
     {
         enemyBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
         // get the starting position
+        startPosition = transform.localPosition;
         originalX = transform.position.x;
         ComputeVelocity();
     }
@@ -65,11 +62,15 @@ public class EnemyMovement : MonoBehaviour
 
     public void EnemyDeath()
     {
-        alive = false;
-        StompAudio.Play();
-        animator.SetBool("alive", alive);
-        GetComponent<BoxCollider2D>().enabled = false;
-        gameManager.IncreaseScore(1);
+        if (alive)
+        {
+            alive = false;
+            StompAudio.Play();
+            animator.SetBool("alive", alive);
+            GetComponent<BoxCollider2D>().enabled = false;
+            GameManager.instance.IncreaseScore(1);
+        }
+
 
 
     }
