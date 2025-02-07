@@ -29,6 +29,7 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: 4960898272269150806}
+  - {fileID: 3022644812391053045}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
@@ -223,6 +224,7 @@ AudioMixerController:
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}
+  - {fileID: 2836376597840106695}
   m_StartSnapshot: {fileID: 24500006}
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
@@ -241,7 +243,7 @@ AudioMixerController:
     - 187ea886ca2eb8342a84373af9030fe1
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 24500006}
+  m_TargetSnapshot: {fileID: 2836376597840106695}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -290,6 +292,7 @@ AudioMixerSnapshotController:
   m_FloatValues:
     6a28f0f444a622347b37cd80e201d2dc: -80
     024391f576f0d4e4da01d7689e41e283: -60
+    8fe0b4a72e412da4caff1a37e2daa53c: -20
     9595870b4827b884b8900ce4b4a13f5d: 0
     28fa615c5d75e9542bdf183bdf534ddb: -20
     c26de97c0daac5a46829b69e09f2438c: -10.34521
@@ -340,6 +343,38 @@ AudioMixerEffectController:
   m_MixLevel: b97323b6c0afed249964460a4496e6ef
   m_Parameters: []
   m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &2836376597840106695
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Fast
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 2dbbf56132af8be4a8b7f03b56ae834f
+  m_FloatValues:
+    6a28f0f444a622347b37cd80e201d2dc: -80
+    024391f576f0d4e4da01d7689e41e283: -60
+    8fe0b4a72e412da4caff1a37e2daa53c: -20
+    9595870b4827b884b8900ce4b4a13f5d: 0
+    28fa615c5d75e9542bdf183bdf534ddb: -20
+    c26de97c0daac5a46829b69e09f2438c: -10.34521
+    c416dedd15a21f3439f3a543976328ee: 1
+  m_TransitionOverrides: {}
+--- !u!244 &3022644812391053045
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: d386085a5796a6e4787b2c86b1c0b7ae
+  m_EffectName: Send
+  m_MixLevel: 8fe0b4a72e412da4caff1a37e2daa53c
+  m_Parameters: []
+  m_SendTarget: {fileID: 6080298051314643566}
   m_EnableWetMix: 0
   m_Bypass: 0
 --- !u!244 &4042656524699263367

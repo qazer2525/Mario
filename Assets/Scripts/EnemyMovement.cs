@@ -19,6 +19,8 @@ public class EnemyMovement : MonoBehaviour
 
     private GameManager gameManager;
 
+    public AudioSource StompAudio;
+
     private bool alive = true;
     void Start()
     {
@@ -64,7 +66,9 @@ public class EnemyMovement : MonoBehaviour
     public void EnemyDeath()
     {
         alive = false;
+        StompAudio.Play();
         animator.SetBool("alive", alive);
+        GetComponent<BoxCollider2D>().enabled = false;
         gameManager.IncreaseScore(1);
 
 
@@ -77,6 +81,7 @@ public class EnemyMovement : MonoBehaviour
         ComputeVelocity();
         alive = true;
         animator.SetBool("alive", alive);
+        GetComponent<BoxCollider2D>().enabled = true;
         animator.SetTrigger("GameRestart");
 
 
