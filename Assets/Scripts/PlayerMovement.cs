@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     // for animation
     public Animator marioAnimator;
 
-    public AudioClip marioDeath;
+    public AudioSource marioDeath;
     public float deathImpulse = 15;
 
     public AudioSource marioAudio;
@@ -91,10 +91,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     void OnCollisionEnter2D(Collision2D col)
-    {   
+    {
         if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) && !onGroundState)
 
-        {   
+        {
             onGroundState = true;
             // update animator state
             marioAnimator.SetBool("onGround", onGroundState);
@@ -174,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Collided with goomba!" + jumpOverGoomba.score.ToString());
             // play death animation
             marioAnimator.Play("mario-die");
-            marioAudio.PlayOneShot(marioDeath);
+            marioDeath.Play();
             alive = false;
         }
         else if (other.gameObject.CompareTag("Enemy") && alive && collisionNormal.y > 0)
