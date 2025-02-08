@@ -197,7 +197,10 @@ public class PlayerMovement : MonoBehaviour
         marioSprite.flipX = false;
         marioBody.linearVelocity = Vector2.zero;
         // reset animation
-        marioAnimator.SetTrigger("gameRestart");
+        if (!alive)
+        {
+            marioAnimator.SetTrigger("gameRestart");
+        }
         alive = true;
 
     }
