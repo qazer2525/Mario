@@ -26,5 +26,6 @@ public class LoadAndWait : MonoBehaviour
     {
         // TODO
         Debug.Log("Return to main menu");
+        SceneManager.LoadSceneAsync("Main Menu", LoadSceneMode.Single);
     }
 }
