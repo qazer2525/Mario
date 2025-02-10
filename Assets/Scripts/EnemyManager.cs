@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public EnemyState enemyState;
     public void Awake()
     {
         // subscribe to Game Restart event
@@ -12,7 +13,10 @@ public class EnemyManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        foreach (Transform child in transform)
+        {
+            enemyState.RmbChild(child.GetInstanceID());
+        }
     }
 
     // Update is called once per frame
@@ -23,6 +27,7 @@ public class EnemyManager : MonoBehaviour
 
     public void GameRestart()
     {
+        enemyState.ResetState();
         foreach (Transform child in transform)
         {
             child.GetComponent<EnemyMovement>().GameRestart();
@@ -31,6 +36,7 @@ public class EnemyManager : MonoBehaviour
 
     public void killEnemy(GameObject enemy)
     {
+        enemyState.killEnemy(enemy);
         enemy.GetComponent<EnemyMovement>().EnemyDeath();
     }
 }

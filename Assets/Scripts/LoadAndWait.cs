@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 public class LoadAndWait : MonoBehaviour
 {
     public CanvasGroup c;
+    public PlayerState playerState;
 
     void Start()
     {
         StartCoroutine(Fade());
     }
     IEnumerator Fade()
-    {
+    {   
+        playerState.BigMario = false;
         for (float alpha = 1f; alpha >= -0.05f; alpha -= 0.05f)
         {
             c.alpha = alpha;

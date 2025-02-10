@@ -47,7 +47,7 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 
     IEnumerator StopBounce()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(1.0f);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
     // used by animator
@@ -60,6 +60,7 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
     public void GameRestart()
     {
         GetComponent<Animator>().SetTrigger("OnGameRestart");
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
     }
 
 }

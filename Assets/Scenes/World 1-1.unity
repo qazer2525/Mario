@@ -1400,7 +1400,7 @@ PrefabInstance:
     - target: {fileID: 1244680805346468968, guid: a201cbee86c177e41adfb32929807f49, type: 3}
       propertyPath: useInt.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1392332995}
+      objectReference: {fileID: 0}
     - target: {fileID: 1244680805346468968, guid: a201cbee86c177e41adfb32929807f49, type: 3}
       propertyPath: useInt.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -1526,6 +1526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdf86f4d65cbbad4a933ae9d4a68f3e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: {fileID: 11400000, guid: 63d85623c951a9e478a5a310f8329d67, type: 2}
 --- !u!4 &912887706 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8189807977226438022, guid: 845d5986e63c6a94b84101380a95e4e8, type: 3}
@@ -1881,6 +1882,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameConstants: {fileID: 11400000, guid: 30c85ca44eb8c7a4d92a191a0a15e491, type: 2}
   marioAnimator: {fileID: 1050401511}
+  BigmarioAnimatorController: {fileID: 9100000, guid: 9eb23ec9cb1e48e4a99342cd78f0aba1, type: 2}
+  marioAnimatorController: {fileID: 9100000, guid: daeacf9d2c7cd2e41b1a3cebb5430cdd, type: 2}
   marioDeath: {fileID: 1076675048}
   marioAudio: {fileID: 1050401512}
   killEnemy:
@@ -1898,6 +1901,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  playerState: {fileID: 11400000, guid: f40cc3b8671c7b647887dea3a1c091cd, type: 2}
 --- !u!50 &1050401508
 Rigidbody2D:
   serializedVersion: 5
@@ -3012,17 +3016,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1392332995 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2380110498667045280, guid: a201cbee86c177e41adfb32929807f49, type: 3}
-  m_PrefabInstance: {fileID: 721715078}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0bc30a5bc2b3804da578c8581528dd3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1503718427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3532450966220045797, guid: 3405c898cb7c7084bb8be54b80d452be, type: 3}

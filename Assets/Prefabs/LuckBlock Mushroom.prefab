@@ -344,6 +344,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerupAnimator: {fileID: 2066405792503107161}
   powerup: {fileID: 2380110498667045280}
+  blocktype: 0
 --- !u!1 &3081139605129041536
 GameObject:
   m_ObjectHideFlags: 0

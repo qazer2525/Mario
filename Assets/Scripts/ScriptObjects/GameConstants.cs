@@ -16,4 +16,5 @@ public class GameConstants : ScriptableObject
     // Goomba's movement
     public float goombaPatrolTime;
     public float goombaMaxOffset;
+
 }

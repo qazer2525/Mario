@@ -20,7 +20,6 @@ public class MagicMushroomPowerup : BasePowerup
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log(col.gameObject.layer);
         if (col.gameObject.CompareTag("Player") && spawned)
         {
             // TODO: do something when colliding with Player
@@ -32,15 +31,12 @@ public class MagicMushroomPowerup : BasePowerup
             rigidBody.bodyType = RigidbodyType2D.Static;
             transform.position = originalpos;
             GetComponentInChildren<Animator>().SetBool("consumed", consumed);
-
+            col.gameObject.GetComponent<PlayerMovement>().BigMario();
         }
         else if (col.gameObject.layer == 8) // else if hitting Pipe, flip travel direction
         {
             var collisionPoint = col.collider.ClosestPoint(transform.position);
             var collisionNormal = new UnityEngine.Vector2(transform.position.x, transform.position.y) - collisionPoint;
-            Debug.Log(collisionNormal.ToString());
-            Debug.Log(spawned);
-            Debug.Log(collisionNormal.y < 0.01f);
             if (spawned && collisionNormal.y < 0.01f)
             {
                 goRight = !goRight;
@@ -69,17 +65,17 @@ public class MagicMushroomPowerup : BasePowerup
 
     public override void GameRestart()
     {
-        if (spawned && !consumed)
-        {
-            GetComponentInChildren<Animator>().SetBool("consumed", true);
-
-        }
         consumed = false;
         GetComponentInChildren<Animator>().SetBool("consumed", consumed);
+        GetComponentInChildren<Animator>().SetTrigger("Default");
         spawned = false;
         GetComponent<BoxCollider2D>().enabled = false;
-        rigidBody.linearVelocity = UnityEngine.Vector2.zero;
-        rigidBody.bodyType = RigidbodyType2D.Static;
+        if (rigidBody.bodyType == RigidbodyType2D.Dynamic)
+        {
+            rigidBody.linearVelocity = UnityEngine.Vector2.zero;
+            rigidBody.bodyType = RigidbodyType2D.Static;
+        }
+
         transform.position = originalpos;
 
     }

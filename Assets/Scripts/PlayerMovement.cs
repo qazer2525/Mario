@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEditor.Animations;
 public class PlayerMovement : MonoBehaviour
 {
     public GameConstants gameConstants;
@@ -22,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     // for animation
     public Animator marioAnimator;
 
+    public AnimatorController BigmarioAnimatorController;
+
+    public AnimatorController marioAnimatorController;
     public AudioSource marioDeath;
     public AudioSource marioAudio;
 
@@ -40,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
     private bool jumpedState = false;
 
     public UnityEvent<GameObject> killEnemy;
+
+    public PlayerState playerState;
     public void Awake()
     {
         // subscribe to Game Restart event
@@ -53,10 +59,15 @@ public class PlayerMovement : MonoBehaviour
         upSpeed = gameConstants.upSpeed;
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();
-        // update animator state
-        marioAnimator.SetBool("onGround", onGroundState);
         SpawnPoint = GameObject.FindGameObjectWithTag("Spawn").transform;
         marioBody.transform.position = SpawnPoint.position;
+        if (playerState.BigMario)
+        {
+            BigMario();
+        }
+        // update animator state
+        onGroundState = true;
+        marioAnimator.SetBool("onGround", onGroundState);
     }
 
     // Update is called once per frame
@@ -145,7 +156,6 @@ public class PlayerMovement : MonoBehaviour
             jumpedState = true;
             // update animator state
             marioAnimator.SetBool("onGround", onGroundState);
-
         }
     }
 
@@ -197,11 +207,19 @@ public class PlayerMovement : MonoBehaviour
         marioSprite.flipX = false;
         marioBody.linearVelocity = Vector2.zero;
         // reset animation
-        if (!alive)
+        if (!alive && marioAnimator.runtimeAnimatorController == marioAnimatorController)
         {
             marioAnimator.SetTrigger("gameRestart");
         }
+        else if (marioAnimator.runtimeAnimatorController != marioAnimatorController)
+        {
+            marioAnimator.runtimeAnimatorController = marioAnimatorController;
+            onGroundState = true;
+            marioAnimator.SetBool("onGround", onGroundState);
+        }
         alive = true;
+        playerState.BigMario = false;
+
 
     }
 
@@ -222,6 +240,13 @@ public class PlayerMovement : MonoBehaviour
         //update score, change UIs
         GameManager.instance.GameOver();
 
+    }
+
+    public void BigMario()
+    {
+        playerState.BigMario = true;
+        marioAnimator.runtimeAnimatorController = BigmarioAnimatorController;
+        marioAnimator.Play(0);
     }
     // public void SetStartingPosition(Scene current, Scene next)
     // {
