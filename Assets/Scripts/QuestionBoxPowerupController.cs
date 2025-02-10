@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum BlockType
 {
@@ -13,10 +14,12 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
     public BasePowerup powerup; // reference to this question box's powerup
     public BlockType blocktype;
 
+    public UnityEvent OnGameRestart;
+
     public void Awake()
     {
         // subscribe to Game Restart event
-        GameManager.instance.gameRestart.AddListener(GameRestart);
+        OnGameRestart.AddListener(GameRestart);
     }
     void Start()
     {
@@ -38,6 +41,7 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
             GetComponent<Animator>().SetTrigger("spawned");
             // spawn the powerup
             powerupAnimator.SetTrigger("spawned");
+            powerup.spawned = true;
             if (blocktype == BlockType.Question)
             {
                 StartCoroutine(StopBounce());
@@ -47,7 +51,7 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 
     IEnumerator StopBounce()
     {
-        yield return new WaitForSecondsRealtime(2f);
+        yield return new WaitForSecondsRealtime(0.5f);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
     // used by animator
@@ -59,7 +63,11 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 
     public void GameRestart()
     {
-        GetComponent<Animator>().SetTrigger("OnGameRestart");
+        if (powerup.spawned == true)
+        {
+            GetComponent<Animator>().SetTrigger("OnGameRestart");
+        }
+
     }
 
 }

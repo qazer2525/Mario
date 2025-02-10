@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 
 public abstract class BasePowerup : MonoBehaviour, IPowerup
@@ -9,11 +10,6 @@ public abstract class BasePowerup : MonoBehaviour, IPowerup
     protected bool goRight = true;
     protected Rigidbody2D rigidBody;
 
-    public void Awake()
-    {
-        // subscribe to Game Restart event
-        GameManager.instance.gameRestart.AddListener(GameRestart);
-    }
     // base methods
     protected virtual void Start(){
         rigidBody = GetComponent<Rigidbody2D>();

@@ -38,9 +38,6 @@ public class MagicMushroomPowerup : BasePowerup
         {
             var collisionPoint = col.collider.ClosestPoint(transform.position);
             var collisionNormal = new UnityEngine.Vector2(transform.position.x, transform.position.y) - collisionPoint;
-            Debug.Log(collisionNormal.ToString());
-            Debug.Log(spawned);
-            Debug.Log(collisionNormal.y < 0.01f);
             if (spawned && collisionNormal.y < 0.01f)
             {
                 goRight = !goRight;
@@ -87,7 +84,11 @@ public class MagicMushroomPowerup : BasePowerup
     // interface implementation
     public override void ApplyPowerup(MonoBehaviour i)
     {
-        // TODO: do something with the object
+        bool result = i.TryGetComponent(out GameManager manager);
+        if (result)
+        {
+            manager.IncreaseMarioLifeCount(1);
+        }
 
     }
 }

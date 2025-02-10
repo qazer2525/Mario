@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CoinPowerup : BasePowerup
 {
+
+    public UnityEvent<IPowerup> PowerUpCollected;
     // setup this object's type
     // instantiate variables
     protected override void Start()
@@ -17,7 +20,7 @@ public class CoinPowerup : BasePowerup
     {
         spawned = true;
         GetComponentInChildren<AudioSource>().Play();
-        GameManager.instance.IncreaseScore(1);
+        PowerUpCollected.Invoke(this);
     }
 
     public override void GameRestart()
@@ -27,6 +30,10 @@ public class CoinPowerup : BasePowerup
     // interface implementation
     public override void ApplyPowerup(MonoBehaviour i)
     {
-        // TODO: do something with the object
+        bool result = i.TryGetComponent(out GameManager manager);
+        if (result)
+        {
+            manager.IncreaseScore(1);
+        }
     }
 }
