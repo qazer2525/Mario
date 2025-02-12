@@ -180,7 +180,7 @@ Animator:
   m_GameObject: {fileID: 4267910673389292733}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f273862bf00b35d46b773e34829eaa84, type: 2}
+  m_Controller: {fileID: 9100000, guid: daeacf9d2c7cd2e41b1a3cebb5430cdd, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -370,6 +370,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9d4441ce-93b8-443a-8851-b0ceba2ea238
     m_ActionName: gameplay/New action2
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e0564c84-fc9c-46bf-9c1e-25c38269f349
+    m_ActionName: 'gameplay/Z[/Keyboard/z]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: SuperMarioBros
   m_DefaultActionMap: gameplay
@@ -432,6 +436,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  Z:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1536889909996858495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,6 +452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameConstants: {fileID: 11400000, guid: 30c85ca44eb8c7a4d92a191a0a15e491, type: 2}
+  marioFaceRight: {fileID: 0}
   marioAnimator: {fileID: 782740180258000923}
   marioDeath: {fileID: 0}
   marioAudio: {fileID: 2684871652512845745}

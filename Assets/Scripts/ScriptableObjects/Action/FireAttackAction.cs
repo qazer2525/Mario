@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "PluggableSM/Actions/FireAttack")]
@@ -13,10 +14,12 @@ public class FireAttackAction : Action
     public override void Act(StateController controller)
     {
         GameObject[] instantiatedPrefabsInScene = GameObject.FindGameObjectsWithTag(attackPrefab.tag);
+
         if (instantiatedPrefabsInScene.Length < maxPrefabInScene)
         {
             // instantiate it where controller (mario) is
-            GameObject x = Instantiate(attackPrefab, controller.transform.position, Quaternion.identity);
+            Vector3 offset = new Vector3(controller.transform.position.x + (marioFaceRight.Value ? 1.0f : -1.0f), controller.transform.position.y, controller.transform.position.z);
+            GameObject x = Instantiate(attackPrefab, offset, Quaternion.identity);
 
             // Get the Rigidbody component of the instantiated object
             Rigidbody2D rb = x.GetComponent<Rigidbody2D>();

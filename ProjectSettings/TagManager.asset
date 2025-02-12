@@ -11,6 +11,7 @@ TagManager:
   - QuestionBlock
   - Manager
   - Spawn
+  - Fireball
   layers:
   - Default
   - TransparentFX

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class GameManager
+public class GameManager : MonoBehaviour
 {
     // events
     public UnityEvent gameStart;
@@ -41,9 +41,9 @@ public class GameManager
         UpdateScore.Invoke();
     }
 
-    public void RequestPowerUpEffect()
+    public void RequestPowerUpEffect(IPowerup powerup)
     {
-
+        powerup.ApplyPowerup(this);
     }
 
     public void GameOver()
@@ -68,8 +68,8 @@ public class GameManager
         }
     }
 
-    public void IncreaseMarioLifeCount(int input)
-    {
+    // public void IncreaseMarioLifeCount(int input)
+    // {
 
-    }
+    // }
 }

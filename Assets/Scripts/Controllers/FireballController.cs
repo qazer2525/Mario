@@ -32,9 +32,10 @@ public class FireballController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.tag == "Enemy")
+        Debug.Log(other.gameObject.tag);
+        if (other.gameObject.tag == "Enemy")
         {
             // destroy self
             Destroy(gameObject);

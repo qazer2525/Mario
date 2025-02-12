@@ -10,8 +10,11 @@ public abstract class BasePowerup : MonoBehaviour, IPowerup
     protected bool goRight = true;
     protected Rigidbody2D rigidBody;
 
+    public UnityEvent<IPowerup> PowerUpCollected;
+
     // base methods
-    protected virtual void Start(){
+    protected virtual void Start()
+    {
         rigidBody = GetComponent<Rigidbody2D>();
     }
 

@@ -71,6 +71,15 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Z"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0564c84-fc9c-46bf-9c1e-25c38269f349"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -216,6 +225,17 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
                     ""action"": ""point"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fef3e2b-80b8-44c8-8d0b-079ebf8aaf4a"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";SuperMarioBros"",
+                    ""action"": ""Z"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -246,6 +266,7 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
         m_gameplay_jumphold = m_gameplay.FindAction("jumphold", throwIfNotFound: true);
         m_gameplay_click = m_gameplay.FindAction("click", throwIfNotFound: true);
         m_gameplay_point = m_gameplay.FindAction("point", throwIfNotFound: true);
+        m_gameplay_Z = m_gameplay.FindAction("Z", throwIfNotFound: true);
     }
 
     ~@MarioActions()
@@ -317,6 +338,7 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_jumphold;
     private readonly InputAction m_gameplay_click;
     private readonly InputAction m_gameplay_point;
+    private readonly InputAction m_gameplay_Z;
     public struct GameplayActions
     {
         private @MarioActions m_Wrapper;
@@ -326,6 +348,7 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
         public InputAction @jumphold => m_Wrapper.m_gameplay_jumphold;
         public InputAction @click => m_Wrapper.m_gameplay_click;
         public InputAction @point => m_Wrapper.m_gameplay_point;
+        public InputAction @Z => m_Wrapper.m_gameplay_Z;
         public InputActionMap Get() { return m_Wrapper.m_gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -350,6 +373,9 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
             @point.started += instance.OnPoint;
             @point.performed += instance.OnPoint;
             @point.canceled += instance.OnPoint;
+            @Z.started += instance.OnZ;
+            @Z.performed += instance.OnZ;
+            @Z.canceled += instance.OnZ;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -369,6 +395,9 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
             @point.started -= instance.OnPoint;
             @point.performed -= instance.OnPoint;
             @point.canceled -= instance.OnPoint;
+            @Z.started -= instance.OnZ;
+            @Z.performed -= instance.OnZ;
+            @Z.canceled -= instance.OnZ;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -402,5 +431,6 @@ public partial class @MarioActions: IInputActionCollection2, IDisposable
         void OnJumphold(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnPoint(InputAction.CallbackContext context);
+        void OnZ(InputAction.CallbackContext context);
     }
 }

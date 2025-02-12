@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Z",
+                    "type": "Button",
+                    "id": "e0564c84-fc9c-46bf-9c1e-25c38269f349",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -194,6 +203,17 @@
                     "action": "point",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3fef3e2b-80b8-44c8-8d0b-079ebf8aaf4a",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";SuperMarioBros",
+                    "action": "Z",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

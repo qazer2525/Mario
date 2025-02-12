@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D marioBody;
     private bool onGroundState = true;
 
+    public BoolVariable marioFaceRight;
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
     // for animation
@@ -70,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (value == -1 && faceRightState)
         {
+            updateMarioShouldFaceRight(false);
             faceRightState = false;
             marioSprite.flipX = true;
             if (marioBody.linearVelocityX > 0.05f)
@@ -79,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
 
         else if (value == 1 && !faceRightState)
         {
+            updateMarioShouldFaceRight(true);
             faceRightState = true;
             marioSprite.flipX = false;
             if (marioBody.linearVelocityX < -0.05f)
@@ -110,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 movement = new Vector2(value, 0);
         // check if it doesn't go beyond maxSpeed
+        if (!alive) return;
         if (onGroundState == false && marioBody.linearVelocityX > 0 && Input.GetKey(KeyCode.A))
         {
             marioBody.AddForce(movement * speed * 4);
@@ -124,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void MoveCheck(int value)
     {
+        if (!alive) return;
         if (value == 0)
         {
             moving = false;
@@ -160,28 +165,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
     }
-    async void OnTriggerEnter2D(Collider2D other)
-    {
-        var collisionPoint = other.ClosestPoint(transform.position);
-        var collisionNormal = new Vector2(transform.position.x, transform.position.y) - collisionPoint;
-        if (other.gameObject.CompareTag("Enemy") && alive && collisionNormal.y <= 0)
-        {
-            //Debug.Log("Collided with goomba!" + jumpOverGoomba.score.ToString());
-            // play death animation
-            marioAnimator.Play("mario-die");
-            marioDeath.Play();
-            alive = false;
-            await Task.Delay(1000);
-            OnGameOver.Invoke();
-        }
-        else if (other.gameObject.CompareTag("Enemy") && alive && collisionNormal.y > 0)
-        {
-            killEnemy.Invoke(other.gameObject);
-            marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
 
-        }
-    }
-    
 
     public void RestartButtonCallback(int input)
     {
@@ -201,10 +185,8 @@ public class PlayerMovement : MonoBehaviour
         marioSprite.flipX = false;
         marioBody.linearVelocity = Vector2.zero;
         // reset animation
-        if (!alive)
-        {
-            marioAnimator.SetTrigger("gameRestart");
-        }
+        GetComponent<MarioStateController>().GameRestart();
+        marioAnimator.SetTrigger("gameRestart");
         alive = true;
 
     }
@@ -220,6 +202,28 @@ public class PlayerMovement : MonoBehaviour
         marioAudio.PlayOneShot(marioAudio.clip);
     }
 
+    private void updateMarioShouldFaceRight(bool value)
+    {
+        faceRightState = value;
+        marioFaceRight.SetValue(faceRightState);
+    }
+    public void DamageMario()
+    {
+        // GameOverAnimationStart(); // last time Mario dies right away
+
+        // pass this to StateController to see if Mario should start game over
+        // since both state StateController and MarioStateController are on the same gameobject, it's ok to cross-refer between scripts
+        GetComponent<MarioStateController>().SetPowerup(PowerupType.Damage);
+    }
+
+    public void GameOver()
+    {
+        OnGameOver.Invoke();
+    }
+    public void RequestPowerUpEffect(IPowerup powerup)
+    {
+        powerup.ApplyPowerup(GetComponent<MarioStateController>());
+    }
     // }
     // public void SetStartingPosition(Scene current, Scene next)
     // {

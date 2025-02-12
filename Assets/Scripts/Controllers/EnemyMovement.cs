@@ -62,7 +62,16 @@ public class EnemyMovement : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-
+        var collisionPoint = other.ClosestPoint(transform.position);
+        var collisionNormal = collisionPoint - new Vector2(transform.position.x, transform.position.y);
+        if (other.gameObject.CompareTag("Player") && alive && collisionNormal.y <= 0)
+        {
+            DamagePlayer.Invoke();
+        }
+        else
+        {
+            Debug.Log("Goomba dies");
+        }
     }
 
     public void EnemyDeath()

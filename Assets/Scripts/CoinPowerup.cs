@@ -6,8 +6,6 @@ using UnityEngine.Events;
 
 public class CoinPowerup : BasePowerup
 {
-
-    public UnityEvent<IPowerup> PowerUpCollected;
     // setup this object's type
     // instantiate variables
     protected override void Start()

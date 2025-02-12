@@ -50,6 +50,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   spawned: 0
+  PowerUpCollected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b2e5d43a1151d0a4da2b8903b4779c71, type: 2}
+        m_TargetAssemblyTypeName: GameEvent`1[[IPowerup, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!61 &448396408681268317
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -135,10 +150,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f71b560802588e4780f47e9f5a18b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 0}
+  Event: {fileID: 11400000, guid: 41a88a925529ab644967d849d8c47926, type: 2}
   Response:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2380110498667045280}
+        m_TargetAssemblyTypeName: MagicMushroomPowerup, Assembly-CSharp
+        m_MethodName: GameRestart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2730608328720136258
 GameObject:
   m_ObjectHideFlags: 0

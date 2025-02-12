@@ -8,7 +8,15 @@ class PowerUpContoller : MonoBehaviour
     public UnityEvent<IPowerup> PowerUpAffectsPlayer;
 
     public void FilterAndCastPowerUp(IPowerup powerup)
+
     {
-        powerup.ApplyPowerup(this);
+        if (powerup.powerupType == PowerupType.Coin)
+        {
+            PowerUpAffectsManager.Invoke(powerup);
+        }
+        else
+        {
+            PowerUpAffectsPlayer.Invoke(powerup);
+        }
     }
 }

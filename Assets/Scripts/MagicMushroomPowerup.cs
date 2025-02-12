@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MagicMushroomPowerup : BasePowerup
 {
@@ -13,14 +14,12 @@ public class MagicMushroomPowerup : BasePowerup
     protected override void Start()
     {
         base.Start(); // call base class Start()
-        this.type = PowerupType.MagicMushroom;
         GetComponent<BoxCollider2D>().enabled = false;
         originalpos = transform.position;
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log(col.gameObject.layer);
         if (col.gameObject.CompareTag("Player") && spawned)
         {
             // TODO: do something when colliding with Player
@@ -32,6 +31,7 @@ public class MagicMushroomPowerup : BasePowerup
             rigidBody.bodyType = RigidbodyType2D.Static;
             transform.position = originalpos;
             GetComponentInChildren<Animator>().SetBool("consumed", consumed);
+            PowerUpCollected.Invoke(this);
 
         }
         else if (col.gameObject.layer == 8) // else if hitting Pipe, flip travel direction
@@ -66,14 +66,11 @@ public class MagicMushroomPowerup : BasePowerup
 
     public override void GameRestart()
     {
-        if (spawned && !consumed)
-        {
-            GetComponentInChildren<Animator>().SetBool("consumed", true);
-
-        }
         consumed = false;
-        GetComponentInChildren<Animator>().SetBool("consumed", consumed);
         spawned = false;
+        GetComponentInChildren<Animator>().SetBool("consumed", consumed);
+        GetComponentInChildren<Animator>().SetBool("spawned", spawned);
+        GetComponentInChildren<Animator>().SetTrigger("gameRestart");
         GetComponent<BoxCollider2D>().enabled = false;
         rigidBody.linearVelocity = UnityEngine.Vector2.zero;
         rigidBody.bodyType = RigidbodyType2D.Static;
@@ -84,10 +81,11 @@ public class MagicMushroomPowerup : BasePowerup
     // interface implementation
     public override void ApplyPowerup(MonoBehaviour i)
     {
-        bool result = i.TryGetComponent(out GameManager manager);
+        MarioStateController mario;
+        bool result = i.TryGetComponent(out mario);
         if (result)
         {
-            manager.IncreaseMarioLifeCount(1);
+            mario.SetPowerup(this.powerupType);
         }
 
     }
