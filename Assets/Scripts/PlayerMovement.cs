@@ -173,15 +173,27 @@ public class PlayerMovement : MonoBehaviour
     {
         var collisionPoint = other.ClosestPoint(transform.position);
         var collisionNormal = new Vector2(transform.position.x, transform.position.y) - collisionPoint;
-        if (other.gameObject.CompareTag("Enemy") && alive && collisionNormal.y <= 0)
+        Debug.Log(collisionNormal.ToString());
+        if (other.gameObject.CompareTag("Enemy") && alive && collisionNormal.y <= 0 && collisionNormal.x != 0)
         {
             //Debug.Log("Collided with goomba!" + jumpOverGoomba.score.ToString());
             // play death animation
-            marioAnimator.Play("mario-die");
-            marioDeath.Play();
-            alive = false;
+            if (playerState.BigMario == true)
+            {
+                playerState.BigMario = false;
+                marioAnimator.runtimeAnimatorController = marioAnimatorController;
+                marioAnimator.Play(0);
+                marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+            }
+            else
+            {
+                marioAnimator.Play("mario-die");
+                marioDeath.Play();
+                alive = false;
+            }
+
         }
-        else if (other.gameObject.CompareTag("Enemy") && alive && collisionNormal.y > 0)
+        else if (other.gameObject.CompareTag("Enemy") && alive && collisionNormal.y >= 0 && collisionNormal.x == 0)
         {
             killEnemy.Invoke(other.gameObject);
             marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
