@@ -2377,7 +2377,7 @@ MonoBehaviour:
   speed: 50
   maxSpeed: 7.5
   upSpeed: 20
-  enemies: {fileID: 866895329}
+  enemies: {fileID: 0}
   jumpOverGoomba: {fileID: 0}
   gameOver: {fileID: 636110169}
   GameUI: {fileID: 1381244053}

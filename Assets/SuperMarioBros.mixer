@@ -30,10 +30,35 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: 4960898272269150806}
   - {fileID: 3022644812391053045}
+  - {fileID: -8377616029275786666}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!244 &-8377616029275786666
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: a7eca828b928a9e46867ac470ea49640
+  m_EffectName: Echo
+  m_MixLevel: 3cc1818aaeffa1445bef4ccc615e6a35
+  m_Parameters:
+  - m_ParameterName: Delay
+    m_GUID: 6f994035d833cb842a90535dae525671
+  - m_ParameterName: Decay
+    m_GUID: edd1a247713d11347b108405795b9296
+  - m_ParameterName: Max channels
+    m_GUID: e27ed1ccd8dbc224d8e3acd192b6b7bf
+  - m_ParameterName: Drymix
+    m_GUID: c0394f7f8d27e6645a614d11fc0eda31
+  - m_ParameterName: Wetmix
+    m_GUID: 1f6a2b758554f2e478a60d7920683acf
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!244 &-6862865904316249280
 AudioMixerEffectController:
   m_ObjectHideFlags: 3
@@ -243,7 +268,7 @@ AudioMixerController:
     - 187ea886ca2eb8342a84373af9030fe1
     name: View
   m_CurrentViewIndex: 0
-  m_TargetSnapshot: {fileID: 2836376597840106695}
+  m_TargetSnapshot: {fileID: 24500006}
 --- !u!243 &24300002
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -290,10 +315,16 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: f6f6cb48a5c93fa4f8041a4bddd4ee22
   m_FloatValues:
+    dae95c71199fbb14d87d68518f191c24: 0.5
     6a28f0f444a622347b37cd80e201d2dc: -80
+    6f994035d833cb842a90535dae525671: 703
+    1f6a2b758554f2e478a60d7920683acf: 0.5
     024391f576f0d4e4da01d7689e41e283: -60
+    edd1a247713d11347b108405795b9296: 0.17
     8fe0b4a72e412da4caff1a37e2daa53c: -20
+    83d5842acd4fb8f4c89d6fb502072e04: 750
     9595870b4827b884b8900ce4b4a13f5d: 0
+    28ab7b3ce687b494c827f990bd3d5d0b: -833
     28fa615c5d75e9542bdf183bdf534ddb: -20
     c26de97c0daac5a46829b69e09f2438c: -10.34521
     c416dedd15a21f3439f3a543976328ee: 1
