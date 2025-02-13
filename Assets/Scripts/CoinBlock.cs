@@ -27,6 +27,7 @@ public class CoinBlock : MonoBehaviour
             coin.GetComponent<Animator>().SetTrigger("OnCollision");
             coin.GetComponent<AudioSource>().Play();
         }
+        GetComponent<AudioSource>().Play();
     }
     public void GameRestart()
     {

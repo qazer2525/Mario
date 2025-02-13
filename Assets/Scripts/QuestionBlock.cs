@@ -34,9 +34,9 @@ public class QuestionBlock : MonoBehaviour
         {
             collected = true;
             questionblockanimator.SetBool("collected", collected);
+            GetComponent<AudioSource>().Play();
             coin.GetComponent<Animator>().SetTrigger("OnCollision");
             coin.GetComponent<AudioSource>().Play();
-
         }
     }
     void OnCollected(int input)
