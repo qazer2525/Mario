@@ -219,11 +219,7 @@ public class PlayerMovement : MonoBehaviour
         marioSprite.flipX = false;
         marioBody.linearVelocity = Vector2.zero;
         // reset animation
-        if (!alive && marioAnimator.runtimeAnimatorController == marioAnimatorController)
-        {
-            marioAnimator.SetTrigger("gameRestart");
-        }
-        else if (marioAnimator.runtimeAnimatorController != marioAnimatorController)
+        if (marioAnimator.runtimeAnimatorController != marioAnimatorController)
         {
             marioAnimator.runtimeAnimatorController = marioAnimatorController;
             onGroundState = true;
@@ -231,6 +227,7 @@ public class PlayerMovement : MonoBehaviour
         }
         alive = true;
         playerState.BigMario = false;
+        marioAnimator.SetTrigger("gameRestart");
 
 
     }
