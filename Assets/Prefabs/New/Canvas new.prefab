@@ -283,7 +283,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseIcon: {fileID: -285718347087670310, guid: 7e3d5088e77ee4b4587b04f6eefc11eb, type: 3}
   playIcon: {fileID: 1901785496931978614, guid: dcaf5e13114741247ad38f54301215e6, type: 3}
-  bgm: {fileID: 0}
   OnGamePaused:
     m_PersistentCalls:
       m_Calls:

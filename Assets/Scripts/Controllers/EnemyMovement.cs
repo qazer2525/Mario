@@ -23,6 +23,7 @@ public class EnemyMovement : MonoBehaviour
 
     public UnityEvent DamagePlayer;
 
+    public UnityEvent BouncePlayer;
     public UnityEvent<int> IncreaseScore;
     void Start()
     {
@@ -60,17 +61,60 @@ public class EnemyMovement : MonoBehaviour
         }
 
     }
+
+    // void OnCollisionEnter2D(Collision2D col)
+    // {
+    //     {
+    //         GetComponent<Collider2D>().isTrigger = false;
+    //         var collisionPoint = col.collider.ClosestPoint(transform.position);
+    //         var collisionNormal = collisionPoint - new Vector2(transform.position.x, transform.position.y);
+    //         if (col.gameObject.CompareTag("Player") && alive && collisionNormal.y <= 0 && col.gameObject.GetComponent<MarioStateController>().currentState.name != "DeadMario")
+    //         {
+    //             if (col.gameObject.GetComponent<BuffStateController>().currentState.name == "Invincible")
+    //             {
+    //                 BurnDeath(collisionNormal.x);
+    //             }
+    //             else
+    //             {
+    //                 DamagePlayer.Invoke();
+    //             }
+
+    //         }
+    //         else if (collisionNormal.y > 0 && col.gameObject.CompareTag("Player") && alive && col.gameObject.GetComponent<MarioStateController>().currentState.name != "DeadMario")
+    //         {
+    //             EnemyDeath();
+    //         }
+    //         else if (col.gameObject.CompareTag("Fireball") && alive)
+    //         {
+    //             BurnDeath(collisionNormal.x);
+    //         }
+    //     }
+    // }
     void OnTriggerEnter2D(Collider2D other)
     {
         var collisionPoint = other.ClosestPoint(transform.position);
         var collisionNormal = collisionPoint - new Vector2(transform.position.x, transform.position.y);
-        if (other.gameObject.CompareTag("Player") && alive && collisionNormal.y <= 0)
+        if (other.gameObject.CompareTag("Player") && alive && collisionNormal.y <= 0 && other.gameObject.GetComponent<MarioStateController>().currentState.name != "DeadMario")
         {
-            DamagePlayer.Invoke();
+            if (other.gameObject.GetComponent<BuffStateController>().currentState.name == "Invincible")
+            {
+                GetComponent<BoxCollider2D>().isTrigger = false;
+                BurnDeath(collisionNormal.x);
+            }
+            else
+            {
+                DamagePlayer.Invoke();
+            }
+
         }
-        else
+        else if (collisionNormal.y > 0 && other.gameObject.CompareTag("Player") && alive && other.gameObject.GetComponent<MarioStateController>().currentState.name != "DeadMario")
         {
-            Debug.Log("Goomba dies");
+            GetComponent<BoxCollider2D>().isTrigger = false;
+            EnemyDeath();
+        }
+        else if (other.gameObject.CompareTag("Fireball") && alive)
+        {
+            BurnDeath(collisionNormal.x);
         }
     }
 
@@ -80,11 +124,33 @@ public class EnemyMovement : MonoBehaviour
         {
             alive = false;
             StompAudio.Play();
-            animator.SetBool("alive", alive);
+            animator.SetBool("stomped", !alive);
             GetComponent<BoxCollider2D>().enabled = false;
             IncreaseScore.Invoke(1);
+            BouncePlayer.Invoke();
         }
     }
+
+    public void BurnDeath(float x)
+    {
+        if (alive)
+        {
+            alive = false;
+            animator.SetBool("burned", !alive);
+            Debug.Log(x);
+            GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+            GetComponent<Rigidbody2D>().AddForce(Vector2.left * x * 50, ForceMode2D.Impulse);
+            IncreaseScore.Invoke(1);
+            StartCoroutine(StartDisable());
+        }
+    }
+
+    IEnumerator StartDisable()
+    {
+        yield return new WaitForSeconds(1f);
+        GetComponent<BoxCollider2D>().enabled = false;
+    }
+
     public void GameRestart()
     {
         transform.localPosition = startPosition;
@@ -92,7 +158,10 @@ public class EnemyMovement : MonoBehaviour
         moveRight = -1;
         ComputeVelocity();
         alive = true;
-        animator.SetBool("alive", alive);
+        animator.SetBool("burned", !alive);
+        animator.SetBool("stomped", !alive);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        GetComponent<BoxCollider2D>().isTrigger = true;
         GetComponent<BoxCollider2D>().enabled = true;
         animator.SetTrigger("GameRestart");
 

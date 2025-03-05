@@ -25,7 +25,8 @@ public class FireAttackAction : Action
             Rigidbody2D rb = x.GetComponent<Rigidbody2D>();
             // Check if the Rigidbody component exists
             if (rb != null)
-            {
+            {   
+                
                 // compute direction vector
                 Vector2 direction = CalculateDirection(degree, marioFaceRight.Value);
                 // Apply a rightward impulse force to the object

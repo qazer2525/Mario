@@ -26,7 +26,6 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioSource marioDeath;
     public AudioSource marioAudio;
-
     private Transform SpawnPoint;
 
     // state
@@ -74,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             updateMarioShouldFaceRight(false);
             faceRightState = false;
             marioSprite.flipX = true;
-            if (marioBody.linearVelocityX > 0.05f)
+            if (marioBody.linearVelocityX > 0.05f && onGroundState == true)
                 marioAnimator.SetTrigger("onSkid");
 
         }
@@ -84,13 +83,13 @@ public class PlayerMovement : MonoBehaviour
             updateMarioShouldFaceRight(true);
             faceRightState = true;
             marioSprite.flipX = false;
-            if (marioBody.linearVelocityX < -0.05f)
+            if (marioBody.linearVelocityX < -0.05f && onGroundState == true)
                 marioAnimator.SetTrigger("onSkid");
         }
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) && !onGroundState)
+        if (((collisionLayerMask & (1 << col.transform.gameObject.layer)) > 0) && !onGroundState && col.collider.transform.position.y < col.otherCollider.transform.position.y)
 
         {
             onGroundState = true;
@@ -186,7 +185,9 @@ public class PlayerMovement : MonoBehaviour
         marioBody.linearVelocity = Vector2.zero;
         // reset animation
         GetComponent<MarioStateController>().GameRestart();
+        GetComponent<BuffStateController>().GameRestart();
         marioAnimator.SetTrigger("gameRestart");
+        marioAnimator.SetBool("onGround", true);
         alive = true;
 
     }
@@ -196,12 +197,22 @@ public class PlayerMovement : MonoBehaviour
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
     }
 
+    public void BouncePlayer()
+    {
+        marioBody.AddForce(Vector2.up * 30, ForceMode2D.Impulse);
+    }
+
     void PlayJumpSound()
     {
         // play jump sound
         marioAudio.PlayOneShot(marioAudio.clip);
     }
 
+    void PlayDeathSound()
+    {
+        // play jump sound
+        marioAudio.PlayOneShot(marioDeath.clip);
+    }
     private void updateMarioShouldFaceRight(bool value)
     {
         faceRightState = value;
@@ -213,7 +224,16 @@ public class PlayerMovement : MonoBehaviour
 
         // pass this to StateController to see if Mario should start game over
         // since both state StateController and MarioStateController are on the same gameobject, it's ok to cross-refer between scripts
-        GetComponent<MarioStateController>().SetPowerup(PowerupType.Damage);
+        if (GetComponent<BuffStateController>().currentState.name != "Invincible"){
+            GetComponent<MarioStateController>().SetPowerup(PowerupType.Damage);
+            if (GetComponent<MarioStateController>().currentState.name == "SmallMario")
+        {
+            alive = false;
+        }
+        }
+        
+        Debug.Log(GetComponent<MarioStateController>().currentState.name);
+        
     }
 
     public void GameOver()

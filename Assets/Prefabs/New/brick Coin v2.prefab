@@ -529,21 +529,6 @@ MonoBehaviour:
   powerupAnimator: {fileID: 5298867658961627878}
   powerup: {fileID: 1201203466947148436}
   blocktype: 1
-  OnGameRestart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!95 &610542778377956280
 Animator:
   serializedVersion: 7

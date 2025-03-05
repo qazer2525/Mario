@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 3486807651117036625}
   - component: {fileID: 7936341643212068629}
   - component: {fileID: 3619181486822566228}
+  - component: {fileID: 5074641283120197955}
   m_Layer: 9
   m_Name: LuckBlock
   m_TagString: QuestionBlock
@@ -389,7 +390,20 @@ MonoBehaviour:
   powerupAnimator: {fileID: 2066405792503107161}
   powerup: {fileID: 8600602955206188082}
   blocktype: 0
-  OnGameRestart:
+--- !u!114 &5074641283120197955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730608328720136258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f71b560802588e4780f47e9f5a18b28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 41a88a925529ab644967d849d8c47926, type: 2}
+  Response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3619181486822566228}

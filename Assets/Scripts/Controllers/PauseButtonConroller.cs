@@ -11,10 +11,7 @@ public class PauseButtonController : MonoBehaviour, IInteractiveButton
     public Sprite pauseIcon;
     public Sprite playIcon;
     private Image image;
-
-    public AudioSource bgm;
     // Start is called before the first frame update
-
     public UnityEvent<GameObject> OnGamePaused;
 
     public UnityEvent<GameObject> OnGameResumed;
@@ -35,19 +32,11 @@ public class PauseButtonController : MonoBehaviour, IInteractiveButton
         isPaused = !isPaused;
         if (isPaused)
         {
-            if (bgm != null)
-            {
-                bgm.Pause();
-            }
             image.sprite = playIcon;
 
         }
         else
-        {
-            if (bgm != null)
-            {
-                bgm.Play();
-            }
+        {   
             image.sprite = pauseIcon;
         }
     }

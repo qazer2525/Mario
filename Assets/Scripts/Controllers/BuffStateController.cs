@@ -43,11 +43,18 @@ public class BuffStateController : StateController
         while (string.Equals(currentState.name, "Invincible", StringComparison.OrdinalIgnoreCase))
         {
             // Toggle the visibility of the sprite renderer
-            spriteRenderer.enabled = !spriteRenderer.enabled;
-
+            if (spriteRenderer.color == new Color(1, 1, 1))
+            {
+                spriteRenderer.color = new Color(0, 0, 0);
+            }
+            else
+            {
+                spriteRenderer.color = new Color(1, 1, 1);
+            }
             // Wait for the specified blink interval
             yield return new WaitForSeconds(GameConstants.flickerInterval);
         }
-        spriteRenderer.enabled = true;
+        spriteRenderer.color = new Color(1, 1, 1);
+        GetComponent<AudioSource>().Stop();
     }
 }

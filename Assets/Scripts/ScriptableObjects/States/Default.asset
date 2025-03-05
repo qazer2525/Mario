@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2f92218b94e4ad489b5a0f1787cf89e, type: 3}
   m_Name: Default
   m_EditorClassIdentifier: 
-  setupActions: []
+  setupActions:
+  - {fileID: 11400000, guid: e8e0fe6e769a17648b342595c58ef748, type: 2}
   actions: []
   eventTriggeredActions: []
   exitActions: []

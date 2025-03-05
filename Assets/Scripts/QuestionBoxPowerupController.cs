@@ -14,13 +14,6 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
     public BasePowerup powerup; // reference to this question box's powerup
     public BlockType blocktype;
 
-    public UnityEvent OnGameRestart;
-
-    public void Awake()
-    {
-        // subscribe to Game Restart event
-        OnGameRestart.AddListener(GameRestart);
-    }
     void Start()
     {
 
@@ -63,10 +56,8 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 
     public void GameRestart()
     {
-        if (powerup.spawned == true)
-        {
-            GetComponent<Animator>().SetTrigger("OnGameRestart");
-        }
+        GetComponent<Animator>().SetTrigger("OnGameRestart");
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
     }
 

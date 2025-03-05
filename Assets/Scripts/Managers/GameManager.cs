@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 30;
         // gameStart.Invoke();
         Time.timeScale = 1.0f;
+        UnityEngine.Rendering.DebugManager.instance.enableRuntimeUI = false;
 
     }
 
